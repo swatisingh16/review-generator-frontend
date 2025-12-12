@@ -21,33 +21,20 @@ function App() {
     setLoading(true);
     setReview("");
 
-    const API_URL = import.meta.env.VITE_API_BASE_URL;
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/generate-review`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        businessName,
+        businessType,
+        tone,
+        lengthLimit,
+        highlights,
+      }),
+    });
 
-    try {
-      const res = await fetch(`${API_URL}/generate-review`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          businessName,
-          businessType,
-          tone,
-          lengthLimit,
-          highlights,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (data.error) {
-        alert("Error generating review: " + data.error);
-      } else {
-        setReview(data.review);
-      }
-
-    } catch (err) {
-      alert("Error connecting to backend: " + err.message);
-    }
-
+    const data = await res.json();
+    setReview(data.review);
     setLoading(false);
   };
 
@@ -57,16 +44,7 @@ function App() {
       return;
     }
 
-    try {
-      await navigator.clipboard.writeText(review);
-    } catch (err) {
-      const textarea = document.createElement("textarea");
-      textarea.value = review;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-    }
+    await navigator.clipboard.writeText(review);
 
     alert("Review copied! Redirecting you to Google Reviews...");
 
