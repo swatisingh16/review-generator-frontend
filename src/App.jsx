@@ -21,36 +21,55 @@ function App() {
     setLoading(true);
     setReview("");
 
-    const res = await fetch("http://localhost:8080/generate-review", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        businessName,
-        businessType,
-        tone,
-        lengthLimit,
-        highlights,
-      }),
-    });
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-    const data = await res.json();
-    setReview(data.review);
+    try {
+      const res = await fetch(`${API_URL}/generate-review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessName,
+          businessType,
+          tone,
+          lengthLimit,
+          highlights,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        alert("Error generating review: " + data.error);
+      } else {
+        setReview(data.review);
+      }
+
+    } catch (err) {
+      alert("Error connecting to backend: " + err.message);
+    }
+
     setLoading(false);
   };
 
-  // ⭐ Copy and redirect to Google Review
   const leaveGoogleReview = async () => {
     if (!review) {
       alert("Generate a review first!");
       return;
     }
 
-    // Copy the generated review
-    await navigator.clipboard.writeText(review);
+    try {
+      await navigator.clipboard.writeText(review);
+    } catch (err) {
+      const textarea = document.createElement("textarea");
+      textarea.value = review;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
 
     alert("Review copied! Redirecting you to Google Reviews...");
 
-    // Open Google Review link
     window.open(GOOGLE_REVIEW_LINK, "_blank");
   };
 
