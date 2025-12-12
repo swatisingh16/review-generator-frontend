@@ -122,3 +122,10 @@ button:disabled {
 .google-btn:hover {
   background: #2f6be0;
 }
+
+@media (max-width: 600px) {
+  .card {
+    width: 90%;
+    padding: 25px;
+  }
+}
