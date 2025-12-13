@@ -2,15 +2,17 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [businessName, setBusinessName] = useState("");
-  const [businessType, setBusinessType] = useState("");
+  const [businessName, setBusinessName] = useState("Trimurti Garden & Banquets");
+  const [businessType, setBusinessType] = useState("Banquet Hall & Event Venue");
+  const [highlights, setHighlights] = useState(
+    "Beautiful ambience, spacious banquet hall, great food quality, friendly staff, perfect for weddings and parties"
+  );
   const [tone, setTone] = useState("Positive & Enthusiastic");
   const [lengthLimit, setLengthLimit] = useState("Medium (100-200 chars)");
-  const [highlights, setHighlights] = useState("");
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const GOOGLE_REVIEW_LINK = "https://g.page/r/CTtjt7R1XI_zEBM/review";
+  const GOOGLE_REVIEW_LINK = "https://g.page/r/CYak1qqHxLuKEBM/review";
 
   const generateReview = async () => {
     if (!businessName || !businessType) {

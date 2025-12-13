@@ -101,7 +101,6 @@ button:disabled {
   background: #04045a;
   padding: 20px;
   border-radius: 10px;
-  border-left: 6px solid #4c3ff2;
 }
 
 .result-box h3 {
