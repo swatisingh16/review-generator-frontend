@@ -2,11 +2,10 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [businessName, setBusinessName] = useState("Trimurti Garden & Banquets");
-  const [businessType, setBusinessType] = useState("Banquet Hall & Event Venue");
-  const [highlights, setHighlights] = useState(
-    "Beautiful ambience, spacious banquet hall, great food quality, friendly staff, perfect for weddings and parties"
-  );
+  // const [businessName, setBusinessName] = useState("Trimurti Garden & Banquets");
+  // const [businessType, setBusinessType] = useState("Banquet Hall & Event Venue");
+  const [highlights, setHighlights] = useState("");
+  const [language, setLanguage] = useState("English");
   const [tone, setTone] = useState("Positive & Enthusiastic");
   const [lengthLimit, setLengthLimit] = useState("Medium (100-200 chars)");
   const [review, setReview] = useState("");
@@ -15,10 +14,10 @@ function App() {
   const GOOGLE_REVIEW_LINK = "https://g.page/r/CYak1qqHxLuKEBM/review";
 
   const generateReview = async () => {
-    if (!businessName || !businessType) {
-      alert("Please fill Business Name and Business Type");
-      return;
-    }
+    // if (!businessName || !businessType) {
+    //   alert("Please fill Business Name and Business Type");
+    //   return;
+    // }
 
     setLoading(true);
     setReview("");
@@ -27,11 +26,12 @@ function App() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        businessName,
-        businessType,
+        // businessName,
+        // businessType,
         tone,
         lengthLimit,
         highlights,
+        language,
       }),
     });
 
@@ -57,7 +57,7 @@ function App() {
     <div className="container">
       <div className="card">
         <h2 className="title">AI Review Generator</h2>
-
+{/**
         <label>Business Name</label>
         <input
           type="text"
@@ -73,6 +73,14 @@ function App() {
           value={businessType}
           onChange={(e) => setBusinessType(e.target.value)}
         />
+*/}
+
+        <label>Language</label>
+        <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+          <option>English</option>
+          <option>Hinglish</option>
+          <option>Marathi</option>
+        </select>
 
         <label>Review Tone</label>
         <select value={tone} onChange={(e) => setTone(e.target.value)}>
