@@ -53,10 +53,7 @@ function ReviewGenerator() {
     await navigator.clipboard.writeText(review);
     setMessage("Review copied! Redirecting to Google Reviews...");
 
-    setTimeout(() => {
-      setMessage("");
-      window.open(GOOGLE_REVIEW_LINK, "_blank");
-    }, 1200);
+    window.location.href = GOOGLE_REVIEW_LINK;
   };
 
   return (
