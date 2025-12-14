@@ -1,36 +1,45 @@
-.success-msg {
-  margin-top: 12px;
-  text-align: center;
-  color: #b0a3ff;;
-  font-weight: 600;
-}
-
-.container {
+.review-page {
   min-height: 100vh;
+  background: linear-gradient(135deg, #f3f4ff, #eef2ff);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+}
+
+.review-page * {
+  box-sizing: border-box;
+}
+
+/* Container */
+.review-page .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 /* Main card */
-.card {
+.review-page .card {
   width: 500px;
-  background: #fff;
+  background: #ffffff;
   padding: 28px;
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 /* Title */
-.title {
+.review-page .title {
   text-align: center;
   color: #4c3ff2;
   margin-bottom: 22px;
   font-size: 22px;
+  font-weight: 700;
+  margin: 0;
 }
 
 /* Labels */
-label {
+.review-page label {
   font-weight: 600;
   margin-top: 16px;
   display: block;
@@ -38,49 +47,56 @@ label {
 }
 
 /* Inputs */
-input,
-select,
-textarea {
+.review-page input,
+.review-page select,
+.review-page textarea {
   width: 100%;
   margin-top: 6px;
   padding: 12px;
   border-radius: 10px;
-  border: 1px solid #111;
+  border: 1px solid #000;
   font-size: 14px;
-  box-sizing: border-box;
+  background: #fff;
+  color: #000;
+}
+
+/* Placeholder */
+.review-page textarea::placeholder {
+  color: #666;
 }
 
 /* Highlights textarea */
-textarea {
+.review-page textarea {
   height: 90px;
   resize: none;
 }
 
 /* Language buttons */
-.lang-buttons {
+.review-page .lang-buttons {
   display: flex;
   gap: 8px;
+  margin-top: 10px;
 }
 
-.lang-btn {
+.review-page .lang-btn {
   flex: 1;
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid #000;
   background: #fff;
   cursor: pointer;
   font-size: 13px;
-  margin-top: 10px;
+  color: #000;
 }
 
-.lang-btn.active {
+.review-page .lang-btn.active {
   background: #e8e6ff;
   border-color: #4c3ff2;
-  font-weight: bold;
+  font-weight: 700;
 }
 
-
 /* Generated review textarea */
-.result-textarea {
+.review-page .result-textarea {
   margin-top: 16px;
   height: 110px;
   border-radius: 10px;
@@ -89,19 +105,36 @@ textarea {
   font-size: 14px;
 }
 
-/* Google button */
-.google-btn {
+/* Buttons */
+.review-page .google-btn {
+  width: 100%;
+  padding: 14px;
   background: #c6bbff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
   margin-top: 14px;
+  color: #000;
+  border: 1px solid #000;
 }
 
-.google-btn:hover {
+.review-page .google-btn:hover {
   background: #b0a3ff;
+}
+
+/* Success message */
+.review-page .success-msg {
+  margin-top: 12px;
+  text-align: center;
+  color: #6a5cff;
+  font-weight: 600;
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-  .card {
+  .review-page .card {
     width: 90%;
   }
 }

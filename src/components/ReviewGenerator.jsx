@@ -23,18 +23,21 @@ function ReviewGenerator() {
     setLoading(true);
     setReview("");
 
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/generate-review`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        // businessName,
-        // businessType,
-        tone,
-        lengthLimit,
-        highlights,
-        language,
-      }),
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/generate-review`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          // businessName,
+          // businessType,
+          tone,
+          lengthLimit,
+          highlights,
+          language,
+        }),
+      }
+    );
 
     const data = await res.json();
     setReview(data.review);
@@ -57,10 +60,11 @@ function ReviewGenerator() {
   };
 
   return (
-    <div className="container">
-      <div className="card">
-        <h2 className="title">AI Review Generator</h2>
-{/**
+    <div className="review-page">
+      <div className="container">
+        <div className="card">
+          <h2 className="title">AI Review Generator</h2>
+          {/**
         <label>Business Name</label>
         <input
           type="text"
@@ -78,59 +82,64 @@ function ReviewGenerator() {
         />
 */}
 
-        {/* <label>Language</label> */}
+          {/* <label>Language</label> */}
 
-        <label>Review Tone</label>
-        <select value={tone} onChange={(e) => setTone(e.target.value)}>
-          <option>Positive & Enthusiastic</option>
-          <option>Professional & Formal</option>
-          <option>Casual & Friendly</option>
-          <option>Funny & Playful</option>
-        </select>
+          <label>Review Tone</label>
+          <select value={tone} onChange={(e) => setTone(e.target.value)}>
+            <option>Positive & Enthusiastic</option>
+            <option>Professional & Formal</option>
+            <option>Casual & Friendly</option>
+            <option>Funny & Playful</option>
+          </select>
 
-        <label>Length Limit (Characters)</label>
-        <select
-          value={lengthLimit}
-          onChange={(e) => setLengthLimit(e.target.value)}
-        >
-          <option>Short (50-100 chars)</option>
-          <option>Medium (100-200 chars)</option>
-          <option>Long (200-400 chars)</option>
-        </select>
+          <label>Length Limit (Characters)</label>
+          <select
+            value={lengthLimit}
+            onChange={(e) => setLengthLimit(e.target.value)}
+          >
+            <option>Short (50-100 chars)</option>
+            <option>Medium (100-200 chars)</option>
+            <option>Long (200-400 chars)</option>
+          </select>
 
-        <label>Key Highlights (Optional)</label>
-        <textarea
-          placeholder="e.g., Good service, friendly staff"
-          value={highlights}
-          onChange={(e) => setHighlights(e.target.value)}
-        ></textarea>
+          <label>Key Highlights (Optional)</label>
+          <textarea
+            placeholder="e.g., Good service, friendly staff"
+            value={highlights}
+            onChange={(e) => setHighlights(e.target.value)}
+          ></textarea>
 
-        <div className="lang-buttons">
-          {["English", "Hindi", "Hinglish", "Marathi"].map((lang) => (
-            <button
-              key={lang}
-              className={language === lang ? "lang-btn active" : "lang-btn"}
-              onClick={() => setLanguage(lang)}
-              type="button"
-            >
-              {lang}
-            </button>
-          ))}
+          <div className="lang-buttons">
+            {["English", "Hindi", "Hinglish", "Marathi"].map((lang) => (
+              <button
+                key={lang}
+                className={language === lang ? "lang-btn active" : "lang-btn"}
+                onClick={() => setLanguage(lang)}
+                type="button"
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={generateReview}
+            className="google-btn"
+            disabled={loading}
+          >
+            {loading ? "Generating..." : "Generate Review"}
+          </button>
+
+          {review && (
+            <>
+              <textarea className="result-textarea" readOnly value={review} />
+              <button className="google-btn" onClick={leaveGoogleReview}>
+                Copy and Leave Review
+              </button>
+            </>
+          )}
+          {message && <p className="success-msg">{message}</p>}
         </div>
-
-        <button onClick={generateReview} className="google-btn" disabled={loading}>
-          {loading ? "Generating..." : "Generate Review"}
-        </button>
-
-        {review && (
-          <>
-            <textarea className="result-textarea" readOnly value={review} />
-            <button className="google-btn" onClick={leaveGoogleReview}>
-              Copy and Leave Review
-            </button>
-          </>
-        )}
-        {message && <p className="success-msg">{message}</p>}
       </div>
     </div>
   );
