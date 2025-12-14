@@ -60,7 +60,7 @@ function ReviewGenerator() {
     <div className="review-page">
       <div className="container">
         <div className="card">
-          <h2 className="title">AI Review Generator</h2>
+          <h2 className="title">tapitkardz AI Review</h2>
           {/**
         <label>Business Name</label>
         <input
