@@ -1,15 +1,17 @@
 import { useState } from "react";
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
-function Login({ onSuccess }) {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
       localStorage.setItem("isLoggedIn", "true");
-      onSuccess();
+      navigate("/review");
     } else {
       setError("Invalid username or password");
     }
