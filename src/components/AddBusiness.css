@@ -1,0 +1,199 @@
+.add-business-wrapper {
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 30px 34px;
+  width: 100%;
+  color: #000;
+}
+
+/* TITLE */
+.add-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 28px;
+}
+
+/* CARD */
+.add-business-card {
+  display: flex;
+  gap: 26px;
+  width: 100%;
+}
+
+/* COLUMNS */
+.form-left,
+.form-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* LOGO ROW */
+.logo-input-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tapit-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* INPUTS */
+.form-left input,
+.form-right input {
+  height: 42px;
+  border-radius: 15px;
+  border: 1.5px solid #000;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  color: #000;
+}
+
+.form-right textarea {
+  height: 150px;
+  border-radius: 15px;
+  border: 1.5px solid #000;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  resize: none;
+  text-align: center;
+}
+
+/* PLACEHOLDER */
+input::placeholder,
+textarea::placeholder {
+  color: #000;
+  font-weight: 600;
+}
+
+/* RED ASTERISK */
+input::placeholder {
+  letter-spacing: 0.2px;
+}
+
+input::placeholder:has(*) {
+  color: #000;
+}
+
+/* DIVIDERS */
+.vertical-divider {
+  width: 1.5px;
+  background: #000;
+}
+
+.horizontal-divider {
+  margin: 28px 0 18px;
+  height: 1.5px;
+  background: #000;
+}
+
+/* SAVE BUTTON */
+.save-btn {
+  margin-top: auto;
+  height: 44px;
+  background: #c9c3ff;
+  border-radius: 15px;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* LANGUAGE */
+.language-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.lang-btn {
+  padding: 8px 22px;
+  border-radius: 15px;
+  border: 1.5px solid #000;
+  background: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+  background: #f2f1ff;
+}
+
+.lang-btn.active {
+  background: #c9c3ff;
+  color: #000;
+  border-color: #c9c3ff;
+}
+
+/* FOOTER */
+.footer-text {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 16px;
+  color: #3f33ff;
+  font-weight: 700;
+}
+
+.logo-input-row input {
+  flex: 1;
+}
+
+.logo-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-upload {
+  cursor: pointer;
+}
+
+.logo-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 20px;
+  background: #fafafa;
+}
+
+.logo-icon:hover {
+  border-color: #000;
+  color: #000;
+}
+
+.logo-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .add-business-card {
+    flex-direction: column;
+  }
+
+  .vertical-divider {
+    display: none;
+  }
+}

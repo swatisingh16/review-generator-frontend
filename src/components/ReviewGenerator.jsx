@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ReviewGenerator.css";
+import { useParams } from "react-router-dom";
 
 function ReviewGenerator() {
   // const [businessName, setBusinessName] = useState("Trimurti Garden & Banquets");
   // const [businessType, setBusinessType] = useState("Banquet Hall & Event Venue");
+  const { businessId } = useParams();
+  const [business, setBusiness] = useState(null);
   const [highlights, setHighlights] = useState("");
   const [language, setLanguage] = useState("English");
   const [tone, setTone] = useState("Positive & Enthusiastic");
@@ -11,8 +14,25 @@ function ReviewGenerator() {
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [availableLanguages, setAvailableLanguages] = useState([]);
 
-  const GOOGLE_REVIEW_LINK = "https://g.page/r/CYak1qqHxLuKEBM/review";
+  useEffect(() => {
+    const businesses = JSON.parse(localStorage.getItem("businesses")) || [];
+    const biz = businesses.find((b) => String(b.id) === businessId);
+
+    if (!biz) {
+      setMessage("Invalid business link");
+      return;
+    }
+
+    setBusiness(biz);
+
+    const langs =
+      biz.languages && biz.languages.length > 0 ? biz.languages : ["English"];
+
+    setAvailableLanguages(langs);
+    setLanguage(langs[0]);
+  }, [businessId]);
 
   const generateReview = async () => {
     // if (!businessName || !businessType) {
@@ -29,8 +49,9 @@ function ReviewGenerator() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          // businessName,
-          // businessType,
+          businessId: business.id,
+          businessName: business.name,
+          businessType: business.type,
           tone,
           lengthLimit,
           highlights,
@@ -53,7 +74,7 @@ function ReviewGenerator() {
     await navigator.clipboard.writeText(review);
     setMessage("Review copied! Redirecting to Google Reviews...");
 
-    window.location.href = GOOGLE_REVIEW_LINK;
+    window.location.href = business.reviewLink;
   };
 
   return (
@@ -61,7 +82,7 @@ function ReviewGenerator() {
       <div className="container">
         <div className="card">
           <h2 className="title">tapitkardz AI Review</h2>
-          {/**
+        {/**
         <label>Business Name</label>
         <input
           type="text"
@@ -77,7 +98,7 @@ function ReviewGenerator() {
           value={businessType}
           onChange={(e) => setBusinessType(e.target.value)}
         />
-*/}
+        */}
 
           {/* <label>Language</label> */}
 
@@ -107,12 +128,12 @@ function ReviewGenerator() {
           ></textarea>
 
           <div className="lang-buttons">
-            {["English", "Hindi", "Hinglish", "Marathi"].map((lang) => (
+            {availableLanguages.map((lang) => (
               <button
                 key={lang}
-                className={language === lang ? "lang-btn active" : "lang-btn"}
-                onClick={() => setLanguage(lang)}
                 type="button"
+                className={`lang-btn ${language === lang ? "active" : ""}`}
+                onClick={() => setLanguage(lang)}
               >
                 {lang}
               </button>
