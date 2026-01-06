@@ -19,10 +19,11 @@ export default function AppRoutes() {
       <Route
         path="/dashboard"
         element={
-          <Dashboard businesses={businesses} setBusinesses={setBusinesses} />
+          <ProtectedRoute>
+            <Dashboard businesses={businesses} setBusinesses={setBusinesses} />
+          </ProtectedRoute>
         }
       />
-
       <Route
         path="/business-list"
         element={

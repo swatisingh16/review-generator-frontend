@@ -11,7 +11,7 @@ function Login() {
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
       localStorage.setItem("isLoggedIn", "true");
-      navigate("/review");
+      navigate("/dashboard");
     } else {
       setError("Invalid username or password");
     }

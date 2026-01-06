@@ -1,14 +1,14 @@
 import { QRCodeCanvas } from "qrcode.react";
 import "./QRCodePage.css";
 import { useRef } from "react";
+import * as htmlToImage from "html-to-image";
 
 export default function QRCodePage({ business }) {
-  if (!business) return null; // 🛑 safety
+  if (!business) return null;
 
-  const reviewUrl = `${window.location.origin}/review/${business.id}`;
+  const reviewUrl = `${window.location.origin}/review/${business._id}`;
   const qrRef = useRef(null);
 
-  /* ✅ Copy link */
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(reviewUrl);
@@ -18,56 +18,50 @@ export default function QRCodePage({ business }) {
     }
   };
 
-  const downloadQR = () => {
-    const canvas = qrRef.current?.querySelector("canvas");
-    if (!canvas) return;
-
+  const downloadQR = async () => {
+    if (!qrRef.current) return;
+    const dataUrl = await htmlToImage.toPng(qrRef.current);
     const link = document.createElement("a");
     link.download = `${business.name}-qr.png`;
-    link.href = canvas.toDataURL("image/png");
+    link.href = dataUrl;
     link.click();
   };
 
-  const printQR = () => {
-    const canvas = qrRef.current?.querySelector("canvas");
-    if (!canvas) return;
+  const printQR = async () => {
+    if (!qrRef.current) return;
 
-    const dataUrl = canvas.toDataURL("image/png");
+    try {
+      const dataUrl = await htmlToImage.toPng(qrRef.current);
 
-    const printWindow = window.open("", "_blank", "width=400,height=400");
+      const printWindow = window.open("", "_blank", "width=600,height=800");
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print QR</title>
+            <style>
+              body { margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; }
+              img { max-width: 100%; }
+            </style>
+          </head>
+          <body>
+            <img src="${dataUrl}" />
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
 
-    printWindow.document.write(`
-    <html>
-      <head>
-        <title>Print QR</title>
-        <style>
-          body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-          }
-          img {
-            width: 220px;
-            height: 220px;
-          }
-        </style>
-      </head>
-      <body>
-        <img src="${dataUrl}" />
-      </body>
-    </html>
-  `);
-
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
+      printWindow.onload = () => {
+        printWindow.focus();
+        printWindow.print();
+      };
+    } catch (err) {
+      alert("Failed to generate QR for printing");
+      console.error(err);
+    }
   };
 
   return (
     <div className="qr-wrapper">
-      {/* LEFT */}
       <div className="qr-left">
         <p className="share-text">
           Share the link with your customer via email or SMS
@@ -88,12 +82,15 @@ export default function QRCodePage({ business }) {
       </div>
 
       {/* RIGHT */}
-      <div className="qr-right">
-        <div className="qr-box" ref={qrRef}>
+      <div className="qr-right" ref={qrRef}>
+        <div className="qr-box">
           <QRCodeCanvas value={reviewUrl} size={220} />
-
           {business.logo && (
-            <img src={business.logo} className="qr-logo" alt="logo" />
+            <img
+              src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${business.logo}`}
+              className="qr-logo"
+              alt="logo"
+            />
           )}
         </div>
 

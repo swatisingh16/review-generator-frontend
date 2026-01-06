@@ -15,31 +15,45 @@ export default function Dashboard() {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [editingBusiness, setEditingBusiness] = useState(null);
 
+  const fetchBusinesses = async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/businesses`);
+    const data = await res.json();
+    setBusinesses(data);
+  };
+
   useEffect(() => {
-    const saved = localStorage.getItem("businesses");
-    if (saved) {
-      setBusinesses(JSON.parse(saved));
-    }
+    fetchBusinesses();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("businesses", JSON.stringify(businesses));
-  }, [businesses]);
+  const handleSaveBusiness = async (formData) => {
+    const url = editingBusiness
+      ? `${import.meta.env.VITE_API_BASE_URL}/businesses/${editingBusiness._id}`
+      : `${import.meta.env.VITE_API_BASE_URL}/businesses`;
 
-  const handleSaveBusiness = (data) => {
-    if (editingBusiness) {
-      setBusinesses((prev) => prev.map((b) => (b.id === data.id ? data : b)));
-    } else {
-      setBusinesses((prev) => [...prev, data]);
-    }
+    await fetch(url, {
+      method: editingBusiness ? "PUT" : "POST",
+      body: formData,
+    });
 
     setShowAddBusiness(false);
     setEditingBusiness(null);
+    fetchBusinesses();
   };
 
   const filteredBusinesses = businesses.filter((biz) =>
     biz.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const copyReviewLink = async (biz) => {
+    const reviewLink = `${window.location.origin}/review/${biz._id}`;
+
+    try {
+      await navigator.clipboard.writeText(reviewLink);
+      alert("Review link copied!");
+    } catch (err) {
+      alert("Failed to copy link");
+    }
+  };
 
   return (
     <div className="dashboard-page">
@@ -68,7 +82,13 @@ export default function Dashboard() {
           ))}
         </nav>
 
-        <button className="logout">
+        <button
+          className="logout"
+          onClick={() => {
+            localStorage.removeItem("isLoggedIn");
+            navigate("/login");
+          }}
+        >
           <FiLogOut /> log out
         </button>
       </aside>
@@ -118,10 +138,16 @@ export default function Dashboard() {
                 </div>
 
                 {filteredBusinesses.map((biz) => (
-                  <div key={biz.id} className="business-card">
+                  <div key={biz._id} className="business-card">
                     <div className="biz-left">
                       {biz.logo ? (
-                        <img src={biz.logo} alt={biz.name} />
+                        <img
+                          src={`${import.meta.env.VITE_API_BASE_URL.replace(
+                            "/api",
+                            ""
+                          )}${biz.logo}`}
+                          alt={biz.name}
+                        />
                       ) : (
                         <div className="logo-icon">
                           <FiCamera />
@@ -131,7 +157,9 @@ export default function Dashboard() {
                     </div>
 
                     <div className="biz-actions">
-                      <button>Copy Link</button>
+                      <button onClick={() => copyReviewLink(biz)}>
+                        Copy Link
+                      </button>
                       <button
                         onClick={() => {
                           setSelectedBusiness(biz);

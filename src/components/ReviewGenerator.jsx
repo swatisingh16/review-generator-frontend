@@ -6,6 +6,7 @@ function ReviewGenerator() {
   // const [businessName, setBusinessName] = useState("Trimurti Garden & Banquets");
   // const [businessType, setBusinessType] = useState("Banquet Hall & Event Venue");
   const { businessId } = useParams();
+  console.log(businessId);
   const [business, setBusiness] = useState(null);
   const [highlights, setHighlights] = useState("");
   const [language, setLanguage] = useState("English");
@@ -17,21 +18,27 @@ function ReviewGenerator() {
   const [availableLanguages, setAvailableLanguages] = useState([]);
 
   useEffect(() => {
-    const businesses = JSON.parse(localStorage.getItem("businesses")) || [];
-    const biz = businesses.find((b) => String(b.id) === businessId);
+    const fetchBusiness = async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/businesses/${businessId}`
+      );
 
-    if (!biz) {
-      setMessage("Invalid business link");
-      return;
-    }
+      if (!res.ok) {
+        setMessage("Invalid business link");
+        return;
+      }
 
-    setBusiness(biz);
+      const biz = await res.json();
+      setBusiness(biz);
+      setHighlights(biz.keywords || "");
 
-    const langs =
-      biz.languages && biz.languages.length > 0 ? biz.languages : ["English"];
+      const langs = biz.languages?.length > 0 ? biz.languages : ["English"];
 
-    setAvailableLanguages(langs);
-    setLanguage(langs[0]);
+      setAvailableLanguages(langs);
+      setLanguage(langs[0]);
+    };
+
+    fetchBusiness();
   }, [businessId]);
 
   const generateReview = async () => {
@@ -49,7 +56,7 @@ function ReviewGenerator() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          businessId: business.id,
+          businessId: business._id,
           businessName: business.name,
           businessType: business.type,
           tone,
@@ -82,7 +89,7 @@ function ReviewGenerator() {
       <div className="container">
         <div className="card">
           <h2 className="title">tapitkardz AI Review</h2>
-        {/**
+          {/**
         <label>Business Name</label>
         <input
           type="text"

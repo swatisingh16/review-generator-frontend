@@ -1,5 +1,4 @@
 import "./AddBusiness.css";
-import logo from "../assets/tapit logo.png";
 import { useState, useEffect } from "react";
 import { FiCamera } from "react-icons/fi";
 
@@ -19,16 +18,45 @@ export default function AddBusiness({ onSave, initialData }) {
       about: "",
     }
   );
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
 
   useEffect(() => {
     if (initialData) {
-      setLogoPreview(initialData.logo || null);
-      setSelectedLangs(initialData.languages || []);
+      const fullLogoUrl = initialData.logo
+        ? `${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${
+            initialData.logo
+          }`
+        : null;
+
+      setLogoPreview(fullLogoUrl);
+
+      const langsFromDb = initialData.languages || [];
+      const normalized = Array.isArray(langsFromDb)
+        ? langsFromDb
+        : typeof langsFromDb === "string"
+        ? JSON.parse(langsFromDb)
+        : [];
+
+      setSelectedLangs(normalized);
+
+      setForm({
+        name: initialData.name || "",
+        type: initialData.type || "",
+        keywords: initialData.keywords || "",
+        city: initialData.city || "",
+        state: initialData.state || "",
+        address: initialData.address || "",
+        email: initialData.email || "",
+        reviewLink: initialData.reviewLink || "",
+        website: initialData.website || "",
+        phone: initialData.phone || "",
+        about: initialData.about || "",
+      });
     }
   }, [initialData]);
 
   const [selectedLangs, setSelectedLangs] = useState([]);
-  const [logoPreview, setLogoPreview] = useState(null);
 
   const languages = [
     "English",
@@ -48,6 +76,7 @@ export default function AddBusiness({ onSave, initialData }) {
       return;
     }
 
+    setLogoFile(file);
     setLogoPreview(URL.createObjectURL(file));
   };
 
@@ -68,16 +97,20 @@ export default function AddBusiness({ onSave, initialData }) {
       return;
     }
 
-    const businessData = {
-      ...(initialData || {}),
-      ...form,
-      logo: logoPreview,
-      languages: selectedLangs,
-      id: initialData?.id || Date.now(),
-      createdAt: initialData?.createdAt || new Date().toISOString(),
-    };
+    const formData = new FormData();
 
-    onSave(businessData);
+    Object.entries(form).forEach(([key, value]) => {
+      formData.append(key, value ?? "");
+    });
+
+    // Send only selected languages
+    formData.append("languages", JSON.stringify(selectedLangs));
+
+    if (logoFile) {
+      formData.append("logo", logoFile);
+    }
+
+    onSave(formData);
   };
 
   return (
@@ -85,16 +118,11 @@ export default function AddBusiness({ onSave, initialData }) {
       <h2 className="add-title">Business Profile</h2>
 
       <div className="add-business-card">
-        {/* LEFT */}
         <div className="form-left">
           <div className="logo-input-row">
             <label className="logo-upload">
               {logoPreview ? (
-                <img
-                  src={logoPreview}
-                  alt="Business Logo"
-                  className="logo-image"
-                />
+                <img src={logoPreview} alt="Logo" className="logo-image" />
               ) : (
                 <div className="logo-icon">
                   <FiCamera />

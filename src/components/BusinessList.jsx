@@ -5,7 +5,7 @@ export default function BusinessList({ businesses }) {
   return (
     <div className="business-list-page">
       {businesses.map((biz) => (
-        <div key={biz.id} className="business-card">
+        <div key={biz._id} className="business-card">
           <div className="biz-left">
             <img src={logo} alt="logo" />
             <input value={biz.name} readOnly />
