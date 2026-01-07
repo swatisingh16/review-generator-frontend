@@ -27,9 +27,9 @@ export default function AppRoutes() {
       <Route
         path="/review/:businessId"
         element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <ReviewGenerator />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         }
       />
     </Routes>
