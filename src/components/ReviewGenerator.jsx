@@ -42,11 +42,6 @@ function ReviewGenerator() {
   }, [businessId]);
 
   const generateReview = async () => {
-    // if (!businessName || !businessType) {
-    //   alert("Please fill Business Name and Business Type");
-    //   return;
-    // }
-
     setLoading(true);
     setReview("");
 
@@ -88,26 +83,22 @@ function ReviewGenerator() {
     <div className="review-page">
       <div className="container">
         <div className="card">
-          <h2 className="title">tapitkardz AI Review</h2>
-          {/**
-        <label>Business Name</label>
-        <input
-          type="text"
-          placeholder="e.g., The Coffee Nook"
-          value={businessName}
-          onChange={(e) => setBusinessName(e.target.value)}
-        />
-
-        <label>Business Type</label>
-        <input
-          type="text"
-          placeholder="e.g., Cafe, Mechanic, Dentist"
-          value={businessType}
-          onChange={(e) => setBusinessType(e.target.value)}
-        />
-        */}
-
-          {/* <label>Language</label> */}
+          {/* Business Header */}
+          {business && (
+            <div className="business-header">
+              {business.logo && (
+                <img
+                  src={`${import.meta.env.VITE_API_BASE_URL.replace(
+                    "/api",
+                    ""
+                  )}${business.logo}`}
+                  alt={business.name}
+                  className="business-logo"
+                />
+              )}
+              <h2 className="business-name">{business.name}</h2>
+            </div>
+          )}
 
           <label>Review Tone</label>
           <select value={tone} onChange={(e) => setTone(e.target.value)}>
@@ -164,6 +155,7 @@ function ReviewGenerator() {
             </>
           )}
           {message && <p className="success-msg">{message}</p>}
+          <p className="powered-by">tapitkardz AI Review</p>
         </div>
       </div>
     </div>

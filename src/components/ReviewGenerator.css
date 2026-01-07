@@ -11,7 +11,6 @@
   box-sizing: border-box;
 }
 
-/* Container */
 .review-page .container {
   display: flex;
   justify-content: center;
@@ -130,6 +129,39 @@
   text-align: center;
   color: #6a5cff;
   font-weight: 600;
+}
+
+/* Business header */
+.business-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.business-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  border: 2px solid #000;
+}
+
+.business-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+}
+
+/* Footer branding */
+.powered-by {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4c3ff2;
 }
 
 /* Mobile */
