@@ -231,6 +231,8 @@ body {
   padding: 10px 14px;
   font-weight: 700;
   box-shadow: 0 4px 4px rgba(0,0,0,0.3);
+  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .biz-actions {
@@ -239,13 +241,31 @@ body {
 }
 
 .biz-actions button {
-  margin-left: 10px;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #000;
   background: #c9c3ff;
   font-weight: 700;
   cursor: pointer;
+}
+
+.biz-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.biz-date {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.3);
 }
 
 .dashboard-page {
@@ -368,7 +388,6 @@ body {
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  margin-left: 10px;
 }
 
 .status-label {
@@ -421,7 +440,6 @@ body {
 .switch input:checked + .slider::before {
   transform: translateX(20px);
 }
-
 
 @media (max-width: 768px) {
   .search-row {

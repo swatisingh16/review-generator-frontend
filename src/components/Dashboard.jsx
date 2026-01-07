@@ -23,6 +23,7 @@ export default function Dashboard() {
     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/businesses`);
     const data = await res.json();
     setBusinesses(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -67,7 +68,9 @@ export default function Dashboard() {
   const confirmDeleteBusiness = async () => {
     try {
       await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/businesses/${businessToDelete._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/businesses/${
+          businessToDelete._id
+        }`,
         { method: "DELETE" }
       );
 
@@ -221,10 +224,19 @@ export default function Dashboard() {
                             <FiCamera />
                           </div>
                         )}
-                        <input value={biz.name} readOnly />
+                        <input
+                          value={biz.name}
+                          readOnly
+                          title={biz.name}
+                          data-fullname={biz.name}
+                        />
                       </div>
 
                       <div className="biz-actions">
+                        <span className="biz-date">
+                          {new Date(biz.createdAt).toLocaleDateString("en-GB")}
+                        </span>
+
                         <button onClick={() => copyReviewLink(biz)}>
                           Copy Link
                         </button>
