@@ -25,14 +25,6 @@ export default function AppRoutes() {
         }
       />
       <Route
-        path="/business-list"
-        element={
-          <ProtectedRoute>
-            <BusinessList businesses={businesses} />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path="/review/:businessId"
         element={
           <ProtectedRoute>
