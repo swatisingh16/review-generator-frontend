@@ -73,7 +73,17 @@ export default function Dashboard() {
             "Terms & Conditions",
             "Settings",
           ].map((item) => (
-            <button key={item} className="menu-item">
+            <button
+              key={item}
+              className="menu-item"
+              onClick={() => {
+                if (item === "Dashboard") {
+                  setActiveView("list");
+                  setSelectedBusiness(null);
+                  setShowAddBusiness(false);
+                }
+              }}
+            >
               <span>{item}</span>
               <span className="arrow-circle">
                 <FiArrowRight />
@@ -136,49 +146,50 @@ export default function Dashboard() {
                     Add Business
                   </button>
                 </div>
+                <div className="business-list">
+                  {filteredBusinesses.map((biz) => (
+                    <div key={biz._id} className="business-card">
+                      <div className="biz-left">
+                        {biz.logo ? (
+                          <img
+                            src={`${import.meta.env.VITE_API_BASE_URL.replace(
+                              "/api",
+                              ""
+                            )}${biz.logo}`}
+                            alt={biz.name}
+                          />
+                        ) : (
+                          <div className="logo-icon">
+                            <FiCamera />
+                          </div>
+                        )}
+                        <input value={biz.name} readOnly />
+                      </div>
 
-                {filteredBusinesses.map((biz) => (
-                  <div key={biz._id} className="business-card">
-                    <div className="biz-left">
-                      {biz.logo ? (
-                        <img
-                          src={`${import.meta.env.VITE_API_BASE_URL.replace(
-                            "/api",
-                            ""
-                          )}${biz.logo}`}
-                          alt={biz.name}
-                        />
-                      ) : (
-                        <div className="logo-icon">
-                          <FiCamera />
-                        </div>
-                      )}
-                      <input value={biz.name} readOnly />
+                      <div className="biz-actions">
+                        <button onClick={() => copyReviewLink(biz)}>
+                          Copy Link
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedBusiness(biz);
+                            setActiveView("qr");
+                          }}
+                        >
+                          Download QR
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditingBusiness(biz);
+                            setShowAddBusiness(true);
+                          }}
+                        >
+                          Edit profile
+                        </button>
+                      </div>
                     </div>
-
-                    <div className="biz-actions">
-                      <button onClick={() => copyReviewLink(biz)}>
-                        Copy Link
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedBusiness(biz);
-                          setActiveView("qr");
-                        }}
-                      >
-                        Download QR
-                      </button>
-                      <button
-                        onClick={() => {
-                          setEditingBusiness(biz);
-                          setShowAddBusiness(true);
-                        }}
-                      >
-                        Edit profile
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </>
             )}
           </>
