@@ -5,33 +5,39 @@ import Login from "../components/Login";
 import ReviewGenerator from "../components/ReviewGenerator";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../components/Dashboard";
-import BusinessList from "../components/BusinessList";
+import { Toaster } from "react-hot-toast";
 
 export default function AppRoutes() {
   const [businesses, setBusinesses] = useState([]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+    <>
+      <Toaster position="bottom-center" />
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
 
-      <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard businesses={businesses} setBusinesses={setBusinesses} />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/review/:businessId"
-        element={
-          // <ProtectedRoute>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard
+                businesses={businesses}
+                setBusinesses={setBusinesses}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/review/:businessId"
+          element={
+            // <ProtectedRoute>
             <ReviewGenerator />
-          // </ProtectedRoute>
-        }
-      />
-    </Routes>
+            // </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
   );
 }

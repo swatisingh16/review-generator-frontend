@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import ReviewApp from "./components/ReviewGenerator";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,10 +12,16 @@ function App() {
     }
   }, []);
 
-  return isLoggedIn ? (
-    <ReviewApp />
-  ) : (
-    <Login onSuccess={() => setIsLoggedIn(true)} />
+  return (
+    <>
+      <Toaster position="top-right" />
+
+      {isLoggedIn ? (
+        <ReviewApp />
+      ) : (
+        <Login onSuccess={() => setIsLoggedIn(true)} />
+      )}
+    </>
   );
 }
 

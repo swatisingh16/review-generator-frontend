@@ -1,6 +1,7 @@
 import "./AddBusiness.css";
 import { useState, useEffect } from "react";
 import { FiCamera } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 export default function AddBusiness({ onSave, initialData }) {
   const [form, setForm] = useState(
@@ -72,7 +73,7 @@ export default function AddBusiness({ onSave, initialData }) {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      alert("Please upload an image file");
+      toast.error("Please upload an image file");
       return;
     }
 
@@ -93,7 +94,7 @@ export default function AddBusiness({ onSave, initialData }) {
 
   const handleSave = () => {
     if (!form.name || !form.reviewLink) {
-      alert("Business name and Google review link are required");
+      toast.error("Business name and Google review link are required");
       return;
     }
 

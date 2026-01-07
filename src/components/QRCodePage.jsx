@@ -2,6 +2,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import "./QRCodePage.css";
 import { useRef } from "react";
 import * as htmlToImage from "html-to-image";
+import toast from "react-hot-toast";
 
 export default function QRCodePage({ business }) {
   if (!business) return null;
@@ -12,9 +13,9 @@ export default function QRCodePage({ business }) {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(reviewUrl);
-      alert("Link copied!");
+      toast.success("Link copied!");
     } catch {
-      alert("Failed to copy link");
+      toast.error("Failed to copy link");
     }
   };
 
@@ -25,6 +26,7 @@ export default function QRCodePage({ business }) {
     link.download = `${business.name}-qr.png`;
     link.href = dataUrl;
     link.click();
+    toast.success("Downloaded QR!");
   };
 
   const printQR = async () => {
@@ -55,7 +57,7 @@ export default function QRCodePage({ business }) {
         printWindow.print();
       };
     } catch (err) {
-      alert("Failed to generate QR for printing");
+      toast.error("Failed to generate QR for printing");
       console.error(err);
     }
   };
@@ -87,7 +89,9 @@ export default function QRCodePage({ business }) {
           <QRCodeCanvas value={reviewUrl} size={220} />
           {business.logo && (
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${business.logo}`}
+              src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${
+                business.logo
+              }`}
               className="qr-logo"
               alt="logo"
             />

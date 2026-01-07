@@ -5,6 +5,8 @@ import logo from "../assets/tapit logo.png";
 import "./Dashboard.css";
 import { FiArrowRight, FiSearch, FiLogOut, FiCamera } from "react-icons/fi";
 import QRCodePage from "./QRCodePage";
+import { MdDelete } from "react-icons/md";
+import toast from "react-hot-toast";
 
 export default function Dashboard() {
   const [showAddBusiness, setShowAddBusiness] = useState(false);
@@ -14,6 +16,8 @@ export default function Dashboard() {
   const [activeView, setActiveView] = useState("list");
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [editingBusiness, setEditingBusiness] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [businessToDelete, setBusinessToDelete] = useState(null);
 
   const fetchBusinesses = async () => {
     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/businesses`);
@@ -49,9 +53,61 @@ export default function Dashboard() {
 
     try {
       await navigator.clipboard.writeText(reviewLink);
-      alert("Review link copied!");
+      toast.success("Review link copied!");
+    } catch {
+      toast.error("Failed to copy link");
+    }
+  };
+
+  const openDeleteModal = (biz) => {
+    setBusinessToDelete(biz);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteBusiness = async () => {
+    try {
+      await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/businesses/${businessToDelete._id}`,
+        { method: "DELETE" }
+      );
+
+      toast.success("Business deleted successfully");
+      fetchBusinesses();
     } catch (err) {
-      alert("Failed to copy link");
+      toast.error("Failed to delete business");
+    } finally {
+      setShowDeleteModal(false);
+      setBusinessToDelete(null);
+    }
+  };
+
+  const toggleStatus = async (biz) => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/businesses/${biz._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            isActive: !biz.isActive,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Status update failed");
+      }
+
+      toast.success(
+        biz.isActive ? "Business deactivated" : "Business activated"
+      );
+
+      fetchBusinesses();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update business status");
     }
   };
 
@@ -124,10 +180,12 @@ export default function Dashboard() {
         {activeView === "list" && (
           <>
             {showAddBusiness ? (
-              <AddBusiness
-                onSave={handleSaveBusiness}
-                initialData={editingBusiness}
-              />
+              <div className="add-business-scroll">
+                <AddBusiness
+                  onSave={handleSaveBusiness}
+                  initialData={editingBusiness}
+                />
+              </div>
             ) : (
               <>
                 <div className="search-row">
@@ -170,6 +228,7 @@ export default function Dashboard() {
                         <button onClick={() => copyReviewLink(biz)}>
                           Copy Link
                         </button>
+
                         <button
                           onClick={() => {
                             setSelectedBusiness(biz);
@@ -178,6 +237,7 @@ export default function Dashboard() {
                         >
                           Download QR
                         </button>
+
                         <button
                           onClick={() => {
                             setEditingBusiness(biz);
@@ -186,6 +246,24 @@ export default function Dashboard() {
                         >
                           Edit profile
                         </button>
+
+                        <button
+                          className="delete-btn"
+                          onClick={() => openDeleteModal(biz)}
+                        >
+                          <MdDelete size={18} />
+                        </button>
+
+                        <div className="status-toggle">
+                          <label className="switch">
+                            <input
+                              type="checkbox"
+                              checked={biz.isActive}
+                              onChange={() => toggleStatus(biz)}
+                            />
+                            <span className="slider"></span>
+                          </label>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -196,6 +274,34 @@ export default function Dashboard() {
         )}
 
         {activeView === "qr" && <QRCodePage business={selectedBusiness} />}
+        {showDeleteModal && (
+          <div className="modal-overlay">
+            <div className="confirm-modal">
+              <h3>Delete Business</h3>
+              <p>
+                Are you sure you want to delete{" "}
+                <strong>{businessToDelete?.name}</strong>?
+                <br />
+                This action cannot be undone.
+              </p>
+
+              <div className="modal-actions">
+                <button
+                  className="cancel-btn"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="confirm-delete-btn"
+                  onClick={confirmDeleteBusiness}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
