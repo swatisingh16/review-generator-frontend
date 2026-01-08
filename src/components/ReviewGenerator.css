@@ -166,6 +166,24 @@
   color: #4c3ff2;
 }
 
+.powered-by {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.powered-link {
+  color: #0066cc;        
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.powered-link:hover {
+  color: #003d99;
+  cursor: pointer;
+}
+
 /* Mobile */
 @media (max-width: 480px) {
   .review-page .card {

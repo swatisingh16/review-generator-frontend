@@ -105,7 +105,12 @@ function ReviewGenerator() {
                     />
                   )}
                   <h2 className="business-name">
-                    {business.name} <IoShieldCheckmarkSharp size={16} color="#1877f2" className="check-mark" />
+                    {business.name}{" "}
+                    <IoShieldCheckmarkSharp
+                      size={16}
+                      color="#1877f2"
+                      className="check-mark"
+                    />
                   </h2>
                 </div>
               )}
@@ -173,7 +178,17 @@ function ReviewGenerator() {
                 <p className="success-msg">{message}</p>
               )}
 
-              <p className="powered-by">Powered by tapitkardz</p>
+              <p className="powered-by">
+                Powered by{" "}
+                <a
+                  href="https://tapitkardz.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="powered-link"
+                >
+                  tapitkardz
+                </a>
+              </p>
             </>
           )}
         </div>
