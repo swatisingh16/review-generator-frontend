@@ -81,7 +81,9 @@ export default function Dashboard() {
   const confirmDeleteBusiness = async () => {
     try {
       await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/businesses/${businessToDelete._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/businesses/${
+          businessToDelete._id
+        }`,
         { method: "DELETE" }
       );
 
@@ -176,8 +178,8 @@ export default function Dashboard() {
       <main className="content">
         <div className="stats-wrapper">
           <div className="stat">
-            <p>Total Visit</p>
-            <h3>0</h3>
+            <p>Total Businesses</p>
+            <h3>{businesses?.length}</h3>
           </div>
           <span className="divider" />
           <div className="stat">
