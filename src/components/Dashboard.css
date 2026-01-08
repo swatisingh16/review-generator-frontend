@@ -493,10 +493,9 @@ body {
   .stats-wrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
     background: transparent;
     padding: 0;
-    margin-bottom: 16px;
   }
 
   .stat {
