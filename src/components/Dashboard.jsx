@@ -18,11 +18,26 @@ export default function Dashboard() {
   const [editingBusiness, setEditingBusiness] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [businessToDelete, setBusinessToDelete] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [stats, setStats] = useState({
     totalBusinesses: 0,
     totalReviewsGenerated: 0,
     totalVisits: 0,
   });
+
+  const handleSidebarAction = (action) => {
+    if (action === "dashboard") {
+      setActiveView("list");
+      setSelectedBusiness(null);
+      setShowAddBusiness(false);
+    }
+
+    if (action === "qr") {
+      setActiveView("qr");
+    }
+
+    setSidebarOpen(false);
+  };
 
   const fetchStats = async () => {
     const res = await fetch(
@@ -143,7 +158,11 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-page">
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+        <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
+          ✕
+        </button>
+
         <h2 className="logo">tapitkardz AI Review</h2>
 
         <div className="profile">
@@ -152,30 +171,46 @@ export default function Dashboard() {
         </div>
 
         <nav className="menu">
-          {[
-            "Dashboard",
-            "QR Code",
-            "Business Profile",
-            "Terms & Conditions",
-            "Settings",
-          ].map((item) => (
-            <button
-              key={item}
-              className="menu-item"
-              onClick={() => {
-                if (item === "Dashboard") {
-                  setActiveView("list");
-                  setSelectedBusiness(null);
-                  setShowAddBusiness(false);
-                }
-              }}
-            >
-              <span>{item}</span>
-              <span className="arrow-circle">
-                <FiArrowRight />
-              </span>
-            </button>
-          ))}
+          <button
+            className="menu-item"
+            onClick={() => handleSidebarAction("dashboard")}
+          >
+            <span>Dashboard</span>
+            <span className="arrow-circle">
+              <FiArrowRight />
+            </span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => handleSidebarAction("qr")}
+          >
+            <span>QR Code</span>
+            <span className="arrow-circle">
+              <FiArrowRight />
+            </span>
+          </button>
+
+          <button className="menu-item" onClick={() => setSidebarOpen(false)}>
+            <span>Business Profile</span>
+            <span className="arrow-circle">
+              <FiArrowRight />
+            </span>
+          </button>
+
+          <button className="menu-item" onClick={() => setSidebarOpen(false)}>
+            <span>Terms & Conditions</span>
+            <span className="arrow-circle">
+              <FiArrowRight />
+            </span>
+          </button>
+
+          <button className="menu-item" onClick={() => setSidebarOpen(false)}>
+            <span>Settings</span>
+            <span className="arrow-circle">
+              <FiArrowRight />
+            </span>
+          </button>
         </nav>
 
         <button
@@ -190,6 +225,12 @@ export default function Dashboard() {
       </aside>
 
       <main className="content">
+        <div className="mobile-header">
+          <button className="hamburger" onClick={() => setSidebarOpen(true)}>
+            ☰
+          </button>
+          <h3 className="mobile-title">Dashboard</h3>
+        </div>
         <div className="stats-wrapper">
           <div className="stat">
             <p>Total Businesses</p>
@@ -340,6 +381,12 @@ export default function Dashboard() {
           </div>
         )}
       </main>
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
     </div>
   );
 }

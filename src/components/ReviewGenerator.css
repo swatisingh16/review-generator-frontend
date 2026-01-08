@@ -18,7 +18,6 @@
   width: 100%;
 }
 
-/* Main card */
 .review-page .card {
   width: 500px;
   background: #ffffff;
@@ -27,7 +26,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* Title */
 .review-page .title {
   text-align: center;
   color: #4c3ff2;
@@ -37,7 +35,6 @@
   margin: 0;
 }
 
-/* Labels */
 .review-page label {
   font-weight: 600;
   margin-top: 16px;
@@ -45,7 +42,6 @@
   color: #111;
 }
 
-/* Inputs */
 .review-page input,
 .review-page select,
 .review-page textarea {
@@ -59,20 +55,18 @@
   color: #000;
 }
 
-/* Placeholder */
 .review-page textarea::placeholder {
   color: #666;
 }
 
-/* Highlights textarea */
 .review-page textarea {
   height: 90px;
   resize: none;
 }
 
-/* Language buttons */
 .review-page .lang-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
 }
@@ -94,7 +88,6 @@
   font-weight: 700;
 }
 
-/* Generated review textarea */
 .review-page .result-textarea {
   margin-top: 16px;
   height: 110px;
@@ -104,7 +97,6 @@
   font-size: 14px;
 }
 
-/* Buttons */
 .review-page .google-btn {
   width: 100%;
   padding: 14px;
@@ -123,7 +115,6 @@
   background: #b0a3ff;
 }
 
-/* Success message */
 .review-page .success-msg {
   margin-top: 12px;
   text-align: center;
@@ -131,7 +122,6 @@
   font-weight: 600;
 }
 
-/* Business header */
 .business-header {
   display: flex;
   flex-direction: column;
@@ -184,7 +174,6 @@
   cursor: pointer;
 }
 
-/* Mobile */
 @media (max-width: 480px) {
   .review-page .card {
     width: 90%;

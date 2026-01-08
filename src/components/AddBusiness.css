@@ -7,7 +7,6 @@
   color: #000;
 }
 
-/* TITLE */
 .add-title {
   text-align: center;
   font-size: 24px;
@@ -15,14 +14,12 @@
   margin-bottom: 28px;
 }
 
-/* CARD */
 .add-business-card {
   display: flex;
   gap: 26px;
   width: 100%;
 }
 
-/* COLUMNS */
 .form-left,
 .form-right {
   flex: 1;
@@ -31,7 +28,6 @@
   gap: 14px;
 }
 
-/* LOGO ROW */
 .logo-input-row {
   display: flex;
   align-items: center;
@@ -45,7 +41,6 @@
   object-fit: cover;
 }
 
-/* INPUTS */
 .form-left input,
 .form-right input {
   height: 42px;
@@ -69,14 +64,12 @@
   text-align: center;
 }
 
-/* PLACEHOLDER */
 input::placeholder,
 textarea::placeholder {
   color: #000;
   font-weight: 600;
 }
 
-/* RED ASTERISK */
 input::placeholder {
   letter-spacing: 0.2px;
 }
@@ -85,7 +78,6 @@ input::placeholder:has(*) {
   color: #000;
 }
 
-/* DIVIDERS */
 .vertical-divider {
   width: 1.5px;
   background: #000;
@@ -97,7 +89,6 @@ input::placeholder:has(*) {
   background: #000;
 }
 
-/* SAVE BUTTON */
 .save-btn {
   margin-top: auto;
   height: 44px;
@@ -109,7 +100,6 @@ input::placeholder:has(*) {
   cursor: pointer;
 }
 
-/* LANGUAGE */
 .language-row {
   display: flex;
   justify-content: center;
@@ -138,7 +128,6 @@ input::placeholder:has(*) {
   border-color: #c9c3ff;
 }
 
-/* FOOTER */
 .footer-text {
   text-align: center;
   margin-top: 14px;
@@ -187,7 +176,6 @@ input::placeholder:has(*) {
   border: 1px solid #ccc;
 }
 
-/* RESPONSIVE */
 @media (max-width: 900px) {
   .add-business-card {
     flex-direction: column;
