@@ -30,11 +30,9 @@ export default function AppRoutes() {
           }
         />
         <Route
-          path="/review/:businessId"
+          path="/review/:slug"
           element={
-            // <ProtectedRoute>
             <ReviewGenerator />
-            // </ProtectedRoute>
           }
         />
       </Routes>

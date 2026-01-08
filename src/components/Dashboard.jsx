@@ -35,10 +35,23 @@ export default function Dashboard() {
       ? `${import.meta.env.VITE_API_BASE_URL}/businesses/${editingBusiness._id}`
       : `${import.meta.env.VITE_API_BASE_URL}/businesses`;
 
-    await fetch(url, {
+    const res = await fetch(url, {
       method: editingBusiness ? "PUT" : "POST",
       body: formData,
     });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.error || "Failed to save business");
+      return;
+    }
+
+    toast.success(
+      editingBusiness
+        ? "Business updated successfully"
+        : "Business added successfully"
+    );
 
     setShowAddBusiness(false);
     setEditingBusiness(null);
@@ -50,7 +63,7 @@ export default function Dashboard() {
   );
 
   const copyReviewLink = async (biz) => {
-    const reviewLink = `${window.location.origin}/review/${biz._id}`;
+    const reviewLink = `${window.location.origin}/review/${biz.slug}`;
 
     try {
       await navigator.clipboard.writeText(reviewLink);
@@ -68,9 +81,7 @@ export default function Dashboard() {
   const confirmDeleteBusiness = async () => {
     try {
       await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/businesses/${
-          businessToDelete._id
-        }`,
+        `${import.meta.env.VITE_API_BASE_URL}/businesses/${businessToDelete._id}`,
         { method: "DELETE" }
       );
 
@@ -212,13 +223,7 @@ export default function Dashboard() {
                     <div key={biz._id} className="business-card">
                       <div className="biz-left">
                         {biz.logo ? (
-                          <img
-                            src={`${import.meta.env.VITE_API_BASE_URL.replace(
-                              "/api",
-                              ""
-                            )}${biz.logo}`}
-                            alt={biz.name}
-                          />
+                          <img src={biz.logo} alt={biz.name} />
                         ) : (
                           <div className="logo-icon">
                             <FiCamera />
@@ -285,7 +290,11 @@ export default function Dashboard() {
           </>
         )}
 
-        {activeView === "qr" && <QRCodePage business={selectedBusiness} />}
+        {activeView === "qr" && (
+          <div className="qr-scroll">
+            <QRCodePage business={selectedBusiness} />
+          </div>
+        )}
         {showDeleteModal && (
           <div className="modal-overlay">
             <div className="confirm-modal">

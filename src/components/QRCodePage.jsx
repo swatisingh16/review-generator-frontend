@@ -7,7 +7,8 @@ import toast from "react-hot-toast";
 export default function QRCodePage({ business }) {
   if (!business) return null;
 
-  const reviewUrl = `${window.location.origin}/review/${business._id}`;
+  const reviewUrl = `${window.location.origin}/review/${business.slug}`;
+
   const qrRef = useRef(null);
 
   const copyLink = async () => {
@@ -88,13 +89,7 @@ export default function QRCodePage({ business }) {
         <div className="qr-box">
           <QRCodeCanvas value={reviewUrl} size={220} />
           {business.logo && (
-            <img
-              src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${
-                business.logo
-              }`}
-              className="qr-logo"
-              alt="logo"
-            />
+            <img src={business.logo} className="qr-logo" alt="logo" />
           )}
         </div>
 

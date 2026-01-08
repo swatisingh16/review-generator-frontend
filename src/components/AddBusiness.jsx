@@ -24,11 +24,7 @@ export default function AddBusiness({ onSave, initialData }) {
 
   useEffect(() => {
     if (initialData) {
-      const fullLogoUrl = initialData.logo
-        ? `${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${
-            initialData.logo
-          }`
-        : null;
+      const fullLogoUrl = initialData.logo || null;
 
       setLogoPreview(fullLogoUrl);
 

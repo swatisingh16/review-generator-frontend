@@ -3,7 +3,7 @@ import "./ReviewGenerator.css";
 import { useParams } from "react-router-dom";
 
 function ReviewGenerator() {
-  const { businessId } = useParams();
+  const { slug } = useParams();
   const [business, setBusiness] = useState(null);
   const [highlights, setHighlights] = useState("");
   const [language, setLanguage] = useState("English");
@@ -18,7 +18,7 @@ function ReviewGenerator() {
     const fetchBusiness = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/businesses/${businessId}`
+          `${import.meta.env.VITE_API_BASE_URL}/businesses/slug/${slug}`
         );
 
         if (!res.ok) {
@@ -45,7 +45,7 @@ function ReviewGenerator() {
     };
 
     fetchBusiness();
-  }, [businessId]);
+  }, [slug]);
 
   const generateReview = async () => {
     if (!business) return;
@@ -53,19 +53,22 @@ function ReviewGenerator() {
     setLoading(true);
     setReview("");
 
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/generate-review`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        businessId: business._id,
-        businessName: business.name,
-        businessType: business.type,
-        tone,
-        lengthLimit,
-        highlights,
-        language,
-      }),
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/generate-review`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessId: business._id,
+          businessName: business.name,
+          businessType: business.type,
+          tone,
+          lengthLimit,
+          highlights,
+          language,
+        }),
+      }
+    );
 
     const data = await res.json();
     setReview(data.review);
@@ -95,9 +98,7 @@ function ReviewGenerator() {
                 <div className="business-header">
                   {business.logo && (
                     <img
-                      src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${
-                        business.logo
-                      }`}
+                      src={business.logo}
                       alt={business.name}
                       className="business-logo"
                     />
@@ -154,7 +155,11 @@ function ReviewGenerator() {
 
               {review && (
                 <>
-                  <textarea className="result-textarea" readOnly value={review} />
+                  <textarea
+                    className="result-textarea"
+                    readOnly
+                    value={review}
+                  />
                   <button className="google-btn" onClick={leaveGoogleReview}>
                     Copy and Leave Review
                   </button>
