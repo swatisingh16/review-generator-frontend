@@ -18,6 +18,19 @@ export default function Dashboard() {
   const [editingBusiness, setEditingBusiness] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [businessToDelete, setBusinessToDelete] = useState(null);
+  const [stats, setStats] = useState({
+    totalBusinesses: 0,
+    totalReviewsGenerated: 0,
+    totalVisits: 0,
+  });
+
+  const fetchStats = async () => {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/businesses/stats/dashboard`
+    );
+    const data = await res.json();
+    setStats(data);
+  };
 
   const fetchBusinesses = async () => {
     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/businesses`);
@@ -28,6 +41,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchBusinesses();
+    fetchStats();
   }, []);
 
   const handleSaveBusiness = async (formData) => {
@@ -179,17 +193,17 @@ export default function Dashboard() {
         <div className="stats-wrapper">
           <div className="stat">
             <p>Total Businesses</p>
-            <h3>{businesses?.length}</h3>
+            <h3>{stats.totalBusinesses}</h3>
           </div>
           <span className="divider" />
           <div className="stat">
             <p>Total Review Generate</p>
-            <h3>0</h3>
+            <h3>{stats.totalVisits}</h3>
           </div>
           <span className="divider" />
           <div className="stat">
             <p>Token</p>
-            <h3>0</h3>
+            <h3>{stats.totalReviewsGenerated}</h3>
           </div>
         </div>
 
