@@ -147,7 +147,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 10px;
   width: 100%;
 }
 
@@ -206,7 +206,7 @@ body {
   background: #fff;
   border-radius: 18px;
   padding: 16px;
-  margin-top: 14px;
+  margin-top: 6px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -300,7 +300,7 @@ body {
 
 /* Business list scrolls */
 .business-list {
-  margin-top: 16px;
+  margin-top: 6px;
   flex: 1;
   overflow-y: auto;
   padding-right: 6px;

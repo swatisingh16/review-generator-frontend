@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ReviewGenerator.css";
 import { useParams } from "react-router-dom";
+import { IoShieldCheckmarkSharp } from "react-icons/io5";
 
 function ReviewGenerator() {
   const { slug } = useParams();
@@ -103,7 +104,9 @@ function ReviewGenerator() {
                       className="business-logo"
                     />
                   )}
-                  <h2 className="business-name">{business.name}</h2>
+                  <h2 className="business-name">
+                    {business.name} <IoShieldCheckmarkSharp size={16} color="#1877f2" className="check-mark" />
+                  </h2>
                 </div>
               )}
 
@@ -170,7 +173,7 @@ function ReviewGenerator() {
                 <p className="success-msg">{message}</p>
               )}
 
-              <p className="powered-by">tapitkardz AI Review</p>
+              <p className="powered-by">Powered by tapitkardz</p>
             </>
           )}
         </div>

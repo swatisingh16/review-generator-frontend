@@ -153,9 +153,11 @@
   font-weight: 700;
   color: #000;
   text-align: center;
+  display: inline-flex;       
+  align-items: center;       
+  gap: 6px;                   
 }
 
-/* Footer branding */
 .powered-by {
   margin-top: 18px;
   text-align: center;
