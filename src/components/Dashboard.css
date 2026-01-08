@@ -491,8 +491,38 @@ body {
   }
 
   .stats-wrapper {
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    background: transparent;
+    padding: 0;
+    margin-bottom: 16px;
+  }
+
+  .stat {
+    background: #c9c3ff;
+    border-radius: 16px;
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .stat p {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .stat h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #000;
+  }
+
+  /* Make last stat full width */
+  .stat:last-child {
+    grid-column: span 2;
   }
 
   .divider {
@@ -537,21 +567,6 @@ body {
     padding: 14px;
   }
 
-  .stats-wrapper {
-    flex-direction: column;
-    gap: 14px;
-    padding: 16px;
-  }
-
-  .stat h3 {
-    font-size: 20px;
-  }
-
-  .divider {
-    display: none;
-  }
-
-  /* Search row */
   .search-row {
     flex-direction: column;
     gap: 12px;
