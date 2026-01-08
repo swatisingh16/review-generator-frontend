@@ -147,3 +147,87 @@
   color: #6c63ff;
   font-weight: 600;
 }
+
+/* Wrapper */
+.qr-wrapper {
+  margin-top: 20px;
+  display: flex;
+  gap: 24px;
+  background: transparent;
+  font-family: "Inter", sans-serif;
+  flex-wrap: wrap; /* allow wrapping */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .qr-wrapper {
+    flex-direction: column; /* stack left and right */
+    gap: 16px;
+  }
+
+  .qr-left,
+  .qr-right {
+    width: 100%; /* full width on mobile */
+  }
+
+  .qr-left {
+    padding: 20px;
+  }
+
+  .qr-right {
+    padding: 20px;
+  }
+
+  .qr-business-name {
+    font-size: 18px;
+  }
+
+  .qr-desc {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .qr-footer {
+    font-size: 13px;
+  }
+
+  .link-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link-box input,
+  .link-box button {
+    width: 100%;
+  }
+
+  .qr-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .qr-actions button {
+    width: 100%;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .qr-box {
+    gap: 6px;
+  }
+
+  .qr-business-name {
+    font-size: 16px;
+  }
+
+  .qr-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pill-btn {
+    font-size: 12px;
+    padding: 6px 14px;
+  }
+}

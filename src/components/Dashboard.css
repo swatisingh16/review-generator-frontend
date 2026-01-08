@@ -709,16 +709,6 @@ body {
     width: 100%;
   }
 
-  .biz-actions button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid #000;
-    background: #c9c3ff;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
   .biz-date {
     width: 100%;
     text-align: center;
