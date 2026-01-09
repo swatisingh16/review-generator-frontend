@@ -3,17 +3,32 @@ import "./ReviewGenerator.css";
 import { useParams } from "react-router-dom";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 
+const INDIAN_LANGUAGES = [
+  "English",
+  "Hindi",
+  "Hinglish",
+  "Gujarati",
+  "Marathi",
+  "Tamil",
+  "Telugu",
+  "Kannada",
+  "Malayalam",
+  "Punjabi",
+  "Bengali",
+  "Urdu",
+];
+
 function ReviewGenerator() {
   const { slug } = useParams();
   const [business, setBusiness] = useState(null);
   const [highlights, setHighlights] = useState("");
-  const [language, setLanguage] = useState("English");
   const [tone, setTone] = useState("Positive & Enthusiastic");
   const [lengthLimit, setLengthLimit] = useState("Medium (100-200 chars)");
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [availableLanguages, setAvailableLanguages] = useState([]);
+  const [availableLanguages] = useState(INDIAN_LANGUAGES);
+  const [language, setLanguage] = useState("English");
 
   useEffect(() => {
     const fetchBusiness = async () => {
@@ -30,10 +45,6 @@ function ReviewGenerator() {
         const biz = await res.json();
         setBusiness(biz);
         setHighlights(biz.keywords || "");
-
-        const langs = biz.languages?.length > 0 ? biz.languages : ["English"];
-        setAvailableLanguages(langs);
-        setLanguage(langs[0]);
 
         if (biz.isActive === false) {
           setMessage(
@@ -85,6 +96,14 @@ function ReviewGenerator() {
     await navigator.clipboard.writeText(review);
     setMessage("Review copied! Redirecting to Google Reviews...");
     window.location.href = business.reviewLink;
+  };
+
+  const openBusinessCard = () => {
+    if (!business?.card) {
+      setMessage("Business card not available");
+      return;
+    }
+    window.open(business.card, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -140,23 +159,26 @@ function ReviewGenerator() {
                 onChange={(e) => setHighlights(e.target.value)}
               ></textarea>
 
-              <div className="lang-buttons">
-                {availableLanguages.map((lang) => (
-                  <button
-                    key={lang}
-                    type="button"
-                    className={`lang-btn ${language === lang ? "active" : ""}`}
-                    onClick={() => setLanguage(lang)}
-                  >
+              <label>Select language</label>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value="" disabled>
+                  Select Language
+                </option>
+
+                {INDIAN_LANGUAGES.map((lang) => (
+                  <option key={lang} value={lang}>
                     {lang}
-                  </button>
+                  </option>
                 ))}
-              </div>
+              </select>
 
               <button
                 onClick={generateReview}
                 className="google-btn"
-                disabled={!business?.isActive || loading}
+                disabled={!language || loading }
               >
                 {loading ? "Generating..." : "Generate Review"}
               </button>
@@ -172,6 +194,12 @@ function ReviewGenerator() {
                     Copy and Leave Review
                   </button>
                 </>
+              )}
+
+              {business?.card && (
+                <button className="google-btn" onClick={openBusinessCard}>
+                  Business card
+                </button>
               )}
 
               {message && business?.isActive && (

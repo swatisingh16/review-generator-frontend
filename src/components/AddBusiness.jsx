@@ -8,6 +8,7 @@ export default function AddBusiness({ onSave, initialData }) {
     initialData || {
       name: "",
       type: "",
+      card: "",
       keywords: "",
       city: "",
       state: "",
@@ -40,6 +41,7 @@ export default function AddBusiness({ onSave, initialData }) {
       setForm({
         name: initialData.name || "",
         type: initialData.type || "",
+        card: initialData.card || "",
         keywords: initialData.keywords || "",
         city: initialData.city || "",
         state: initialData.state || "",
@@ -134,7 +136,7 @@ export default function AddBusiness({ onSave, initialData }) {
             </label>
             <input
               name="name"
-              placeholder="Enter Your Business Name"
+              placeholder="Business Name"
               value={form.name}
               onChange={handleChange}
             />
@@ -144,6 +146,13 @@ export default function AddBusiness({ onSave, initialData }) {
             name="type"
             placeholder="Business type"
             value={form.type}
+            onChange={handleChange}
+          />
+
+          <input
+            name="card"
+            placeholder="Digital Business card"
+            value={form.card}
             onChange={handleChange}
           />
 
@@ -222,10 +231,10 @@ export default function AddBusiness({ onSave, initialData }) {
         </div>
       </div>
 
-      <div className="horizontal-divider" />
+      {/* <div className="horizontal-divider" /> */}
 
       {/* LANGUAGE SELECTION */}
-      <div className="language-row">
+      {/* <div className="language-row">
         {languages.map((lang) => (
           <button
             key={lang}
@@ -238,7 +247,7 @@ export default function AddBusiness({ onSave, initialData }) {
             {lang}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="horizontal-divider" />
       <p className="footer-text">tapitkardz AI Review</p>
