@@ -261,12 +261,14 @@ body {
 }
 
 .biz-actions button {
+  color: #000;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #000;
   background: #38B6FF;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.3) !important;
 }
 
 .biz-info {

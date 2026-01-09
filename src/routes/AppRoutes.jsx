@@ -6,6 +6,7 @@ import ReviewGenerator from "../components/ReviewGenerator";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../components/Dashboard";
 import { Toaster } from "react-hot-toast";
+import PublicRoute from "./PublicRoute";
 
 export default function AppRoutes() {
   const [businesses, setBusinesses] = useState([]);
@@ -16,7 +17,14 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
 
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
         <Route
           path="/dashboard"
@@ -29,12 +37,7 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/review/:slug"
-          element={
-            <ReviewGenerator />
-          }
-        />
+        <Route path="/review/:slug" element={<ReviewGenerator />} />
       </Routes>
     </>
   );
