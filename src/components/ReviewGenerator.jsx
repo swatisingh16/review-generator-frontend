@@ -140,6 +140,7 @@ function ReviewGenerator() {
                 <option>Professional & Formal</option>
                 <option>Casual & Friendly</option>
                 <option>Funny & Playful</option>
+                <option>Constructive Criticism</option>
               </select>
 
               <label>Length Limit (Characters)</label>
