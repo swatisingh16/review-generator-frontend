@@ -487,6 +487,21 @@ body {
   transform: translateX(20px);
 }
 
+
+@media (max-width: 768px) {
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-box,
+  .add-btn {
+    flex: unset;
+    width: 100%;
+  }
+
+}
+
+
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
