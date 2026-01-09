@@ -325,7 +325,7 @@ export default function Dashboard() {
                           className="delete-btn"
                           onClick={() => openDeleteModal(biz)}
                         >
-                          <MdDelete size={18} />
+                          <MdDelete size={20} />
                         </button>
 
                         <div className="status-toggle">
