@@ -51,12 +51,30 @@ export default function QRCodePage({ business }) {
     try {
       const dataUrl = await htmlToImage.toPng(qrRef.current);
 
-      // Mobile-safe: open image only
-      const win = window.open();
-      win.document.write(`<img src="${dataUrl}" style="width:100%" />`);
-      win.document.close();
+      const printWindow = window.open("", "_blank", "width=600,height=800");
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print QR</title>
+            <style>
+              body { margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; }
+              img { max-width: 100%; }
+            </style>
+          </head>
+          <body>
+            <img src="${dataUrl}" />
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+
+      printWindow.onload = () => {
+        printWindow.focus();
+        printWindow.print();
+      };
     } catch (err) {
-      toast.error("Printing not supported on mobile. Please download instead.");
+      toast.error("Failed to generate QR for printing");
+      console.error(err);
     }
   };
 
