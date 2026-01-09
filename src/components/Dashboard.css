@@ -265,6 +265,7 @@ body {
 
 .biz-actions button {
   color: #000;
+  height: 36px;
   padding: 10px 14px !important;
   border-radius: 10px;
   border: 1px solid #000;
@@ -272,6 +273,9 @@ body {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 4px 4px rgba(0,0,0,0.3) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .biz-info {
@@ -481,142 +485,6 @@ body {
 
 .switch input:checked + .slider::before {
   transform: translateX(20px);
-}
-
-@media (max-width: 768px) {
-  .search-row {
-    flex-direction: column;
-  }
-
-  .search-box,
-  .add-btn {
-    flex: unset;
-    width: 100%;
-  }
-
-  .stats-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    background: transparent;
-    padding: 0;
-  }
-
-  .stat {
-    background: #38B6FF;
-    border-radius: 16px;
-    padding: 8px;
-    text-align: center;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  .stat p {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .stat h3 {
-    font-size: 20px;
-    font-weight: 900;
-    color: #000;
-  }
-
-  /* Make last stat full width */
-  .stat:last-child {
-    grid-column: span 2;
-  }
-
-  .divider {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  /* Overall layout */
-  .dashboard-page {
-    flex-direction: column;
-  }
-
-  /* Sidebar becomes top bar */
-  .sidebar {
-    width: 100%;
-    min-height: auto;
-    padding: 16px;
-    border-radius: 0;
-  }
-
-  .logo {
-    font-size: 18px;
-    margin-bottom: 12px;
-  }
-
-  .profile {
-    justify-content: center;
-    margin-bottom: 12px;
-  }
-
-  .menu-item {
-    flex-shrink: 0;
-    min-width: 160px;
-  }
-
-  .logout {
-    margin-top: 12px;
-  }
-
-  .content {
-    padding: 14px;
-  }
-
-  .search-row {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .add-btn {
-    width: 100%;
-    height: 44px;
-  }
-
-  /* Business card */
-  .business-card {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-  }
-
-  .biz-left {
-    justify-content: center;
-  }
-
-  .biz-left img {
-    width: 56px;
-    height: 56px;
-  }
-
-  .biz-left input {
-    width: 100%;
-    text-align: center;
-  }
-
-  .biz-actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .biz-actions button {
-    width: 100%;
-    margin-left: 0;
-  }
-
-   .dashboard-page {
-    height: auto;
-  }
-
-  .business-list {
-    max-height: calc(100vh - 260px);
-  }
 }
 
 @media (max-width: 768px) {

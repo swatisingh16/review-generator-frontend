@@ -90,6 +90,7 @@ input::placeholder:has(*) {
 }
 
 .save-btn {
+  color: #000;
   margin-top: auto;
   height: 44px;
   background: #38B6FF;
