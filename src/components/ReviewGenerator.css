@@ -28,7 +28,7 @@
 
 .review-page .title {
   text-align: center;
-  color: #4c3ff2;
+  color: #38B6FF;
   margin-bottom: 22px;
   font-size: 22px;
   font-weight: 700;
@@ -118,7 +118,7 @@
 .review-page .success-msg {
   margin-top: 12px;
   text-align: center;
-  color: #6a5cff;
+  color: #38B6FF;
   font-weight: 600;
 }
 
@@ -170,7 +170,7 @@
 }
 
 .powered-link:hover {
-  color: #003d99;
+  color: #38B6FF;
   cursor: pointer;
 }
 
