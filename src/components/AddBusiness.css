@@ -92,7 +92,7 @@ input::placeholder:has(*) {
 .save-btn {
   margin-top: auto;
   height: 44px;
-  background: #c9c3ff;
+  background: #38B6FF;
   border-radius: 15px;
   border: none;
   font-size: 16px;
@@ -123,16 +123,16 @@ input::placeholder:has(*) {
 }
 
 .lang-btn.active {
-  background: #c9c3ff;
+  background: #38B6FF;
   color: #000;
-  border-color: #c9c3ff;
+  border-color: #38B6FF;
 }
 
 .footer-text {
   text-align: center;
   margin-top: 14px;
   font-size: 16px;
-  color: #3f33ff;
+  color: #38B6FF;
   font-weight: 700;
 }
 

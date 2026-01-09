@@ -108,7 +108,7 @@ function ReviewGenerator() {
                     {business.name}{" "}
                     <IoShieldCheckmarkSharp
                       size={16}
-                      color="#1877f2"
+                      color="#38B6FF"
                       className="check-mark"
                     />
                   </h2>

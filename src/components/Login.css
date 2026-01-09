@@ -25,7 +25,7 @@
 
 /* Title */
 .login-title {
-  color: #3f33ff;
+  color: #38B6FF;
   margin: 6px;
   font-size: 22px;
   font-weight: 700;
@@ -64,7 +64,7 @@
 .login-card button {
   width: 100%;
   padding: 14px;
-  background: #c6bbff;
+  background: #38B6FF;
   border: 1px solid #000;
   border-radius: 10px;
   font-size: 16px;
@@ -74,7 +74,7 @@
 }
 
 .login-card button:hover {
-  background: #b2a6ff;
+  background: #38B6FF;
 }
 
 /* Error */
