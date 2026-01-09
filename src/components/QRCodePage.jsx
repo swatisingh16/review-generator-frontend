@@ -23,26 +23,12 @@ export default function QRCodePage({ business }) {
 
   const downloadQR = async () => {
     if (!qrRef.current) return;
-
-    try {
-      const blob = await htmlToImage.toBlob(qrRef.current);
-
-      if (!blob) throw new Error("Blob generation failed");
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${business.name}-qr.png`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      URL.revokeObjectURL(url);
-      toast.success("Downloaded QR!");
-    } catch (e) {
-      toast.error("Download not supported on this device");
-    }
+    const dataUrl = await htmlToImage.toPng(qrRef.current);
+    const link = document.createElement("a");
+    link.download = `${business.name}-qr.png`;
+    link.href = dataUrl;
+    link.click();
+    toast.success("Downloaded QR!");
   };
 
   const printQR = async () => {
