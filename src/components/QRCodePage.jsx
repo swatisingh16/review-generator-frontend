@@ -23,12 +23,26 @@ export default function QRCodePage({ business }) {
 
   const downloadQR = async () => {
     if (!qrRef.current) return;
-    const dataUrl = await htmlToImage.toPng(qrRef.current);
-    const link = document.createElement("a");
-    link.download = `${business.name}-qr.png`;
-    link.href = dataUrl;
-    link.click();
-    toast.success("Downloaded QR!");
+
+    try {
+      const blob = await htmlToImage.toBlob(qrRef.current);
+
+      if (!blob) throw new Error("Blob generation failed");
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${business.name}-qr.png`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+      toast.success("Downloaded QR!");
+    } catch (e) {
+      toast.error("Download not supported on this device");
+    }
   };
 
   const printQR = async () => {
@@ -36,31 +50,11 @@ export default function QRCodePage({ business }) {
 
     try {
       const dataUrl = await htmlToImage.toPng(qrRef.current);
-
-      const printWindow = window.open("", "_blank", "width=600,height=800");
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Print QR</title>
-            <style>
-              body { margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; }
-              img { max-width: 100%; }
-            </style>
-          </head>
-          <body>
-            <img src="${dataUrl}" />
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-
-      printWindow.onload = () => {
-        printWindow.focus();
-        printWindow.print();
-      };
+      const win = window.open();
+      win.document.write(`<img src="${dataUrl}" style="width:100%" />`);
+      win.document.close();
     } catch (err) {
-      toast.error("Failed to generate QR for printing");
-      console.error(err);
+      toast.error("Printing not supported on mobile. Please download instead.");
     }
   };
 
