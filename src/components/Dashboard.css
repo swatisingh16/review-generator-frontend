@@ -61,6 +61,7 @@ body {
 .mobile-header {
   display: none;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   margin-bottom: 14px;
 }
@@ -502,8 +503,8 @@ body {
   background: #fff;
   border: 1px solid #000;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: none;
   align-items: center;
   justify-content: center;
@@ -513,10 +514,6 @@ body {
 @media (max-width: 768px) {
   .mobile-logout {
     display: flex;
-  }
-
-  .mobile-header {
-    justify-content: space-between;
   }
 }
 

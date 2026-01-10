@@ -7,6 +7,7 @@ import { FiArrowRight, FiSearch, FiLogOut, FiCamera } from "react-icons/fi";
 import QRCodePage from "./QRCodePage";
 import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
+import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 
 export default function Dashboard() {
   const [showAddBusiness, setShowAddBusiness] = useState(false);
@@ -160,7 +161,7 @@ export default function Dashboard() {
     <div className="dashboard-page">
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
-          ✕
+          <RxCross1 />
         </button>
 
         <h2 className="logo">tapitkardz AI Review</h2>
@@ -227,7 +228,7 @@ export default function Dashboard() {
       <main className="content">
         <div className="mobile-header">
           <button className="hamburger" onClick={() => setSidebarOpen(true)}>
-            ☰
+            <RxHamburgerMenu />
           </button>
 
           <h3 className="mobile-title">tapitkardz AI Review</h3>
