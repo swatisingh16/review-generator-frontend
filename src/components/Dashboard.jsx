@@ -161,7 +161,7 @@ export default function Dashboard() {
     <div className="dashboard-page">
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
-          <RxCross1 />
+          <RxCross1 color="#000" />
         </button>
 
         <h2 className="logo">tapitkardz AI Review</h2>
