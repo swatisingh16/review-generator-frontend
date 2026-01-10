@@ -81,18 +81,50 @@ export default function AddBusiness({ onSave, initialData }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: name === "reviewLink" ? value.trim() : value,
+    }));
   };
 
-  const toggleLanguage = (lang) => {
-    setSelectedLangs((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
-    );
+  const isValidGoogleReviewLink = (url) => {
+    try {
+      const parsedUrl = new URL(url);
+
+      const allowedHosts = [
+        "g.page",
+        "www.google.com",
+        "google.com",
+        "maps.google.com",
+      ];
+
+      if (!allowedHosts.some((host) => parsedUrl.hostname.includes(host))) {
+        return false;
+      }
+
+      return (
+        parsedUrl.pathname.includes("/review") ||
+        parsedUrl.pathname.includes("/reviews")
+      );
+    } catch (err) {
+      return false;
+    }
   };
+
+  // const toggleLanguage = (lang) => {
+  //   setSelectedLangs((prev) =>
+  //     prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
+  //   );
+  // };
 
   const handleSave = () => {
     if (!form.name || !form.reviewLink) {
       toast.error("Business name and Google review link are required");
+      return;
+    }
+
+    if (!isValidGoogleReviewLink(form.reviewLink)) {
+      toast.error("Please enter a valid Google review link");
       return;
     }
 
@@ -102,7 +134,6 @@ export default function AddBusiness({ onSave, initialData }) {
       formData.append(key, value ?? "");
     });
 
-    // Send only selected languages
     formData.append("languages", JSON.stringify(selectedLangs));
 
     if (logoFile) {
