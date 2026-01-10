@@ -8,6 +8,7 @@ import QRCodePage from "./QRCodePage";
 import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
+import { FaEye } from "react-icons/fa";
 
 export default function Dashboard() {
   const [showAddBusiness, setShowAddBusiness] = useState(false);
@@ -305,6 +306,16 @@ export default function Dashboard() {
                           title={biz.name}
                           data-fullname={biz.name}
                         />
+                        <div className="status-toggle">
+                          <label className="switch">
+                            <input
+                              type="checkbox"
+                              checked={biz.isActive}
+                              onChange={() => toggleStatus(biz)}
+                            />
+                            <span className="slider"></span>
+                          </label>
+                        </div>
                       </div>
 
                       <div className="biz-actions">
@@ -341,16 +352,18 @@ export default function Dashboard() {
                           <MdDelete size={20} />
                         </button>
 
-                        <div className="status-toggle">
-                          <label className="switch">
-                            <input
-                              type="checkbox"
-                              checked={biz.isActive}
-                              onChange={() => toggleStatus(biz)}
-                            />
-                            <span className="slider"></span>
-                          </label>
-                        </div>
+                        <button
+                          className="delete-btn"
+                          onClick={() =>
+                            window.open(
+                              `${window.location.origin}/review/${biz.slug}`,
+                              "_blank",
+                              "noopener,noreferrer"
+                            )
+                          }
+                        >
+                          <FaEye size={20} />
+                        </button>
                       </div>
                     </div>
                   ))}
