@@ -229,7 +229,19 @@ export default function Dashboard() {
           <button className="hamburger" onClick={() => setSidebarOpen(true)}>
             ☰
           </button>
-          <h3 className="mobile-title">Dashboard</h3>
+
+          <h3 className="mobile-title">tapitkardz AI Review</h3>
+
+          <button
+            className="mobile-logout"
+            onClick={() => {
+              localStorage.removeItem("isLoggedIn");
+              navigate("/login");
+            }}
+            aria-label="Logout"
+          >
+            <FiLogOut />
+          </button>
         </div>
         <div className="stats-wrapper">
           <div className="stat">

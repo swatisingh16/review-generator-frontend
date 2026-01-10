@@ -441,7 +441,6 @@ body {
   color: #000;
 }
 
-/* Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -455,7 +454,6 @@ body {
   height: 0;
 }
 
-/* Slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -465,7 +463,6 @@ body {
   transition: 0.3s;
 }
 
-/* Knob */
 .slider::before {
   content: "";
   position: absolute;
@@ -478,7 +475,6 @@ body {
   transition: 0.3s;
 }
 
-/* Checked state */
 .switch input:checked + .slider {
   background-color: #4caf50;
 }
@@ -501,6 +497,33 @@ body {
 
 }
 
+.mobile-logout {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .mobile-logout {
+    display: flex;
+  }
+
+  .mobile-header {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar .logout, .logo {
+    display: none;
+  }
+}
 
 @media (max-width: 768px) {
   .sidebar {
