@@ -240,7 +240,7 @@ export default function Dashboard() {
             }}
             aria-label="Logout"
           >
-            <FiLogOut />
+            <FiLogOut size={20} />
           </button>
         </div>
         <div className="stats-wrapper">
